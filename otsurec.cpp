@@ -43,6 +43,8 @@ int otsu(Mat counts)
 		sum_counts += counts.at<float>(i, 0);
 	}
 
+	cout << counts.type() << endl;
+
 	Mat p = Mat::zeros(counts.rows, counts.cols, counts.type());
 	Mat omega = Mat::zeros(counts.rows, counts.cols, counts.type());
 
