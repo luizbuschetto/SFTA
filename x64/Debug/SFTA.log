@@ -1,5 +1,0 @@
-﻿  otsurec.cpp
-c:\users\luizb\github\sfta\otsurec.cpp(53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\luizb\github\sfta\otsurec.cpp(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  SFTA.vcxproj -> C:\Users\luizb\GitHub\SFTA\x64\Debug\SFTA.exe
-  SFTA.vcxproj -> C:\Users\luizb\GitHub\SFTA\x64\Debug\SFTA.pdb (Partial PDB)
