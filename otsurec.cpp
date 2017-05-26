@@ -4,7 +4,7 @@
 // https://stackoverflow.com/questions/15771512/compare-histograms-of-grayscale-images-in-opencv
 // http://www.geeksforgeeks.org/pass-2d-array-parameter-c/
 
-void otsurec(Mat I, int ttotal)
+void otsurec(Mat I, int ttotal, double T[][COLS])
 {
 	if (!I.empty())
 	{
@@ -48,22 +48,16 @@ void otsurec(Mat I, int ttotal)
 		double pos = otsu(counts, 256);
 		//cout << "pos: " << pos << endl;
 
-		double T[ttotal][COLS];
+		//double T[ttotal][COLS];
 
-		// Initializing matrix
-		for(int i = 0; i < ttotal; i++)
-				T[i][0] = 0;
+		// // Initializing matrix
+		// for(int i = 0; i < ttotal; i++)
+		// 		T[i][0] = 0;
 
 		otsurec_helper(T, counts, 1, NUM_BINS, 1, ttotal);
-
-		for(int i = 0; i < ttotal; i++)
-				cout << T[i][0] << endl;
-
-		// Return the matrix "T" here
-
 	}
 	else
-		return;
+		return ;
 }
 
 // void test_func(double test_array[][1], int i)
