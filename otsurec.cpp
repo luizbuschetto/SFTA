@@ -8,34 +8,34 @@ void otsurec(Mat I, int ttotal, double T[][COLS])
 {
 	if (!I.empty())
 	{
-		// I = I.reshape(1, I.NUM_BINS*I.cols);
-		//
-		// // Histogram data
-		//
-		// // Set histogram bins count
-		// int NUM_BINS = 256;
-		// int histSize[] = { NUM_BINS };
-		//
-		// // Set ranges for histogram bins
-		// float lranges[] = { 0, 256 };
-		// const float* ranges[] = { lranges };
-		//
-		// // Create matrix for histogram
-		// Mat hist = Mat::zeros(NUM_BINS, 1, CV_16UC1);
-		// int channels[] = { 0 };
-		//
-		// // Calculate histogram
-		// calcHist(&I, 1, channels, cv::Mat(), hist, 1, histSize, ranges, true, false);
+		I = I.reshape(1, I.rows*I.cols);
+
+		// Histogram data
+
+		// Set histogram bins count
+		//int NUM_BINS = 256;
+		int histSize[] = { NUM_BINS };
+
+		// Set ranges for histogram bins
+		float lranges[] = { 0, 256 };
+		const float* ranges[] = { lranges };
+
+		// Create matrix for histogram
+		Mat hist = Mat::zeros(NUM_BINS, 1, CV_16UC1);
+		int channels[] = { 0 };
+
+		// Calculate histogram
+		calcHist(&I, 1, channels, cv::Mat(), hist, 1, histSize, ranges, true, false);
 
 		// Using the histogram genered by MATLAB to validate the algorithm
-		float matrix[256][1];
-		FILE* fid = fopen("hist_matlab.txt", "r");
-
-		for ( int i = 0; i < 256; i++ )
-				fscanf(fid, "%f", &matrix[i][0]);
-
-		Mat hist = cv::Mat(256, 1, CV_32F, matrix);
-
+		// float matrix[256][1];
+		// FILE* fid = fopen("hist_matlab.txt", "r");
+		//
+		// for ( int i = 0; i < 256; i++ )
+		// 		fscanf(fid, "%f", &matrix[i][0]);
+		//
+		// Mat hist = cv::Mat(256, 1, CV_32F, matrix);
+		//
 		double counts[NUM_BINS][COLS];
 
 		for ( int i = 0; i < hist.rows; i++ )
