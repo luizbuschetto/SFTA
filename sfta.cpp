@@ -22,8 +22,8 @@ void sfta(Mat I, int nt)
 	 Mat D = Mat::zeros(1, dSize, CV_64F);
 	 int pos = 1;
 
-	 for( int t = 0; t < nt; t++ )
-	 {
+	 //for( int t = 0; t < nt; t++ )
+	 //{
 		 		double thresh = T[0][0];
 				Mat Ib = Mat::zeros(I.rows, I.cols, I.type());
 
@@ -34,11 +34,37 @@ void sfta(Mat I, int nt)
 
 				threshold(Ib, Ib, thresh, 255, THRESH_BINARY); // Using 255 because it's equivalent to 1 in MATLAB
 
-				Mat Ib_new = findBorders(Ib);
+				pair <Mat, int> findBordersVars (Mat::zeros(Ib.rows, Ib.cols, I.type()), 0);
+				findBordersVars = findBorders(Ib);
+
+				// Return of findBorders:
+				// Ib 			 = findBordersVars.first
+				// vals_size = findBordersVars.second
+
+				// OTIMIZAR URGENTEMENTE ESSA SEÇÃO DE CÓDIGO!!!!!! --------------------
+				int vals[findBordersVars.second][1];
+				int vals_count = 0;
+
+				// Equivalent to: vals = double(I(Ib));
+			  for(int i = 0; i < findBordersVars.first.rows; i++)
+			  {
+			 	  		for(int j = 0; j < findBordersVars.first.cols; j++)
+				  		{
+					  			if (findBordersVars.first.at<float>(j,i) == 255)
+						  		{
+							  			 vals[vals_count][0] = I.at<uchar>(j,i);
+								  		 //cout << vals_count+1 << ": " << vals[vals_count][0] << endl;
+									  	 vals_count++;
+								  }
+				 		  }
+			  }
+
+				// ---------------------------------------------------------------------
 
 				// namedWindow("thresh_test", WINDOW_NORMAL);
-				// imshow("thresh_test", Ib_new);
+				// imshow("thresh_test", Ib);
 				// waitKey(0);
-	 	}
+
+	 	//} // termina o for
 
 }

@@ -2,8 +2,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <utility>
 
 using namespace std;
 using namespace cv;
 
-Mat findBorders(Mat I);
+pair <Mat, int> findBorders(Mat I);
