@@ -1,10 +1,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
-#include <math.h>
 
 using namespace std;
 using namespace cv;
 
-double hausDim(Mat I);
+void cvPolyfit(cv::Mat &src_x, cv::Mat &src_y, cv::Mat &dst, int order);

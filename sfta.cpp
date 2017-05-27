@@ -20,10 +20,10 @@ void sfta(Mat I, int nt)
 	//  		cout << T[i][0] << endl;
 
 	 int dSize = nt * 6; 	// dSize = numel(T) * 6: nt = numel(T) sempre? Verificar isso
-	 Mat D = Mat::zeros(1, dSize, CV_64F);
+	 //Mat D = Mat::zeros(1, dSize, CV_64F);
 	 int pos = 1;
 
-	 //for( int t = 0; t < nt; t++ )
+	// for( int t = 0; t < nt; t++ )
 	 //{
 		 		double thresh = T[0][0];
 				Mat Ib = Mat::zeros(I.rows, I.cols, I.type());
@@ -62,8 +62,8 @@ void sfta(Mat I, int nt)
 
 				// ---------------------------------------------------------------------
 
-				hausDim(findBordersVars.first);
-
+				double D = hausDim(findBordersVars.first);
+				cout << "D no final: " << D << endl;
 				// namedWindow("thresh_test", WINDOW_NORMAL);
 				// imshow("thresh_test", Ib);
 				// waitKey(0);
