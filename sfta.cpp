@@ -1,6 +1,7 @@
 #include "sfta.h"
 #include "otsurec.h"
 #include "findBorders.h"
+#include "hausDim.h"
 
 void sfta(Mat I, int nt)
 {
@@ -60,6 +61,8 @@ void sfta(Mat I, int nt)
 			  }
 
 				// ---------------------------------------------------------------------
+
+				hausDim(findBordersVars.first);
 
 				// namedWindow("thresh_test", WINDOW_NORMAL);
 				// imshow("thresh_test", Ib);
