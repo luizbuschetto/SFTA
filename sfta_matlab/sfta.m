@@ -20,6 +20,8 @@ function [ D ] = sfta( I, nt )
 %    Alceu Ferraz Costa 
 %    email: alceufc [at] icmc [dot] usp [dot] br
 
+    tic
+    
     % If necessary, convert I to a grayscale image with bit-depth of 8.
     I = im2uint8(I);
     if size(I,3) ~= 1
@@ -69,4 +71,5 @@ function [ D ] = sfta( I, nt )
         D(pos) = numel(vals);
         pos = pos + 1;
     end;
+    toc
 end
