@@ -1,8 +1,6 @@
 #include "findBorders.h"
 
-// Aqui estou retornando um par porque assim eu posso criar uma matriz do tamanho
-// que eu preciso em sfta.c. Assim, eu não preciso rodar duas vezes o laço.
-pair <Mat, int> findBorders(Mat I)
+Mat findBorders(Mat I)
 {
       Mat Im = Mat::zeros(I.rows, I.cols, I.type());
       copyMakeBorder(I, I, 1, 1, 1, 1, BORDER_CONSTANT, 255); // I = padarray(I, [1, 1], 1);
@@ -10,7 +8,6 @@ pair <Mat, int> findBorders(Mat I)
       int w = Im.cols;
 
       bool bkgFound = false;
-      int vals_size = 0;
 
       for(int row = 0; row < h; row++)
       {
@@ -27,7 +24,6 @@ pair <Mat, int> findBorders(Mat I)
                           if (I.at<float>(row + i, col + j) == 0)
                           {
                               Im.at<float>(row, col) = 255;
-                              vals_size++;
                               bkgFound = true;
                               break;
                           }
@@ -40,6 +36,5 @@ pair <Mat, int> findBorders(Mat I)
           }
       }
 
-      pair <Mat, int> values (Im, vals_size);
-      return values;
+      return Im;
 }

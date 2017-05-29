@@ -7,4 +7,4 @@
 using namespace std;
 using namespace cv;
 
-pair <Mat, int> findBorders(Mat I);
+Mat findBorders(Mat I);

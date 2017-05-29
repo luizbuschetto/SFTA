@@ -12,7 +12,6 @@ void sfta(Mat I, int nt)
 	cvtColor(I, I, CV_BGR2GRAY, 1);
 
 	double T[nt+1];
-	// Initializing vector
 	for(int i = 0; i < nt; i++)
 			T[i] = 0;
 
@@ -34,30 +33,20 @@ void sfta(Mat I, int nt)
 
 				threshold(Ib, Ib, thresh, 255, THRESH_BINARY); // Using 255 because it's equivalent to 1 in MATLAB
 
-				pair <Mat, int> findBordersVars (Mat::zeros(Ib.rows, Ib.cols, CV_64FC1), 0);
-				findBordersVars = findBorders(Ib); // Essa função pode retornar só a imagem agora
-
-				// Return of findBorders:
-				// Ib 			 = findBordersVars.first
-				// vals_size = findBordersVars.second
+				Mat Ib_borders = Mat::zeros(Ib.rows, Ib.cols, Ib.type());
+				Ib_borders = findBorders(Ib);
 
 				// OTIMIZAR URGENTEMENTE ESSA SEÇÃO DE CÓDIGO!!!!!! --------------------
-				//int vals[findBordersVars.second][1];
 				double sumVals = 0;
 				int countVals = 0;
 
-				// cout << findBordersVars.first.rows << endl;
-				// cout << findBordersVars.first.cols << endl;
-
 				// Equivalent to: vals = double(I(Ib));
-			  for(int i = 0; i < findBordersVars.first.rows; i++)
+			  for(int i = 0; i < Ib_borders.rows; i++)
 			  {
-			 	  		for(int j = 0; j < findBordersVars.first.cols; j++)
+			 	  		for(int j = 0; j < Ib_borders.cols; j++)
 				  		{
-					  			if (findBordersVars.first.at<float>(i,j) == 255)
+					  			if (Ib_borders.at<float>(i,j) == 255)
 						  		{
-							  			 //vals[countVals][0] = I.at<uchar>(j,i); // Ainda precisa dessa variável?
-								  		 //cout << vals_count+1 << ": " << vals[vals_count][0] << endl;
 											 sumVals = sumVals + I.at<uchar>(i,j);
 											 countVals++;
 								  }
@@ -66,7 +55,7 @@ void sfta(Mat I, int nt)
 
 				// ---------------------------------------------------------------------
 
-				D[pos] = hausDim(findBordersVars.first);
+				D[pos] = hausDim(Ib_borders);
 				pos += 1;
 
 				D[pos] = sumVals / countVals;
@@ -75,7 +64,7 @@ void sfta(Mat I, int nt)
 				D[pos] = countVals;
 				pos += 1;
 
-	 	} // Termina o primeiro for
+	 	}
 
 		 T[nt] = 1;
 
@@ -89,30 +78,24 @@ void sfta(Mat I, int nt)
 				threshold(I, lowThresh, lowerThresh*range, 255, THRESH_BINARY);
 				threshold(I, upThresh, upperThresh*range, 255, THRESH_BINARY_INV);
 
-				Mat result = Mat::zeros(upThresh.rows, upThresh.cols, upThresh.type());
-				bitwise_and(lowThresh, upThresh, result);
+				Mat Ib_thresh = Mat::zeros(Ib.rows, Ib.cols, Ib.type());
+				bitwise_and(lowThresh, upThresh, Ib_thresh);
 
-				result.convertTo(result, Ib.type());
+				Ib_thresh.convertTo(Ib_thresh, Ib.type());
 
-				// a partir daqui=============================================================
-
-				pair <Mat, int> findBordersVars1 (Mat::zeros(result.rows, result.cols, CV_64FC1), 0);
-				findBordersVars1 = findBorders(result); // Essa função pode retornar só a imagem agora
-
-				// Return of findBorders:
-				// Ib 			 = findBordersVars.first
-				// vals_size = findBordersVars.second
+				Mat Ib_borders = Mat::zeros(Ib.rows, Ib.cols, Ib.type());
+				Ib_borders = findBorders(Ib_thresh);
 
 				// OTIMIZAR URGENTEMENTE ESSA SEÇÃO DE CÓDIGO!!!!!! --------------------
 				double sumVals = 0;
 				int countVals = 0;
 
 				// Equivalent to: vals = double(I(Ib));
-			  for(int i = 0; i < findBordersVars1.first.rows; i++)
+			  for(int i = 0; i < Ib_borders.rows; i++)
 			  {
-			 	  		for(int j = 0; j < findBordersVars1.first.cols; j++)
+			 	  		for(int j = 0; j < Ib_borders.cols; j++)
 				  		{
-					  			if (findBordersVars1.first.at<float>(i,j) == 255)
+					  			if (Ib_borders.at<float>(i,j) == 255)
 						  		{
 											 sumVals = sumVals + I.at<uchar>(i,j);
 											 countVals++;
@@ -122,7 +105,7 @@ void sfta(Mat I, int nt)
 
 				// ---------------------------------------------------------------------
 
-				D[pos] = hausDim(findBordersVars1.first);
+				D[pos] = hausDim(Ib_borders);
 				pos += 1;
 
 				D[pos] = sumVals / countVals;
@@ -134,5 +117,4 @@ void sfta(Mat I, int nt)
 
 		for(int i = 0; i < pos; i++)
 				cout << "D[" << i + 1 << "]: " << D[i] << endl;
-
 }

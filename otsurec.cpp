@@ -13,7 +13,6 @@ void otsurec(Mat I, int ttotal, double T[])
 		// Histogram data
 
 		// Set histogram bins count
-		//int NUM_BINS = 256;
 		int histSize[] = { NUM_BINS };
 
 		// Set ranges for histogram bins
@@ -27,44 +26,18 @@ void otsurec(Mat I, int ttotal, double T[])
 		// Calculate histogram
 		calcHist(&I, 1, channels, cv::Mat(), hist, 1, histSize, ranges, true, false);
 
-		// Using the histogram genered by MATLAB to validate the algorithm
-		// float matrix[256][1];
-		// FILE* fid = fopen("hist_matlab.txt", "r");
-		//
-		// for ( int i = 0; i < 256; i++ )
-		// 		fscanf(fid, "%f", &matrix[i][0]);
-		//
-		// Mat hist = cv::Mat(256, 1, CV_32F, matrix);
-		//
 		double counts[NUM_BINS];
 
-		for ( int i = 0; i < hist.rows; i++ )
-		{
+		for (int i = 0; i < hist.rows; i++)
 				counts[i] = hist.at<float>(i,0);
-		}
-
-		// -------------------------------------------------------------------------
 
 		double pos = otsu(counts, 256);
-		//cout << "pos: " << pos << endl;
-
-		//double T[ttotal][COLS];
-
-		// // Initializing matrix
-		// for(int i = 0; i < ttotal; i++)
-		// 		T[i][0] = 0;
 
 		otsurec_helper(T, counts, 1, NUM_BINS, 1, ttotal);
 	}
 	else
-		return ;
+		return;
 }
-
-// void test_func(double test_array[][1], int i)
-// {
-// 		for (int i = 0; i < 18; i++)
-// 			cout << i << ":"test_array[i][0] << endl;
-// }
 
 double otsu(double counts[], int countsSize)
 {
@@ -152,8 +125,8 @@ void otsurec_helper(double T[], double counts[], int lowerBin, int upperBin, int
 
 				double level = otsu(counts_aux, size) + lowerBin + 1;
 
-				// Por algum motivo, pra calcular a posição de inserção tava dando problema
-				// só consegui arrumar assim
+				// For some reason, I was getting a problem for calculating the insertPos
+				// in one line. So, the only way I make it work is that
 				float aux = (tLower + tUpper);
 				float aux1 = aux / 2;
 				float aux2 = ceil(aux1);

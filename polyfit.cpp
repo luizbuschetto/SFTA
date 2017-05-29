@@ -45,7 +45,6 @@
 // 	Graduate Student,
 //	University of North Carolina at Charlotte
 
-//#include "precomp.hpp"
 #include "polyfit.h"
 
 using namespace cv;
