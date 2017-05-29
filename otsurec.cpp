@@ -4,7 +4,7 @@
 // https://stackoverflow.com/questions/15771512/compare-histograms-of-grayscale-images-in-opencv
 // http://www.geeksforgeeks.org/pass-2d-array-parameter-c/
 
-void otsurec(Mat I, int ttotal, double T[][COLS])
+void otsurec(Mat I, int ttotal, double T[])
 {
 	if (!I.empty())
 	{
@@ -36,11 +36,11 @@ void otsurec(Mat I, int ttotal, double T[][COLS])
 		//
 		// Mat hist = cv::Mat(256, 1, CV_32F, matrix);
 		//
-		double counts[NUM_BINS][COLS];
+		double counts[NUM_BINS];
 
 		for ( int i = 0; i < hist.rows; i++ )
 		{
-				counts[i][0] = hist.at<float>(i,0);
+				counts[i] = hist.at<float>(i,0);
 		}
 
 		// -------------------------------------------------------------------------
@@ -66,50 +66,50 @@ void otsurec(Mat I, int ttotal, double T[][COLS])
 // 			cout << i << ":"test_array[i][0] << endl;
 // }
 
-double otsu(double counts[][COLS], int countsSize)
+double otsu(double counts[], int countsSize)
 {
 	double sum_counts = 0;
 
 	for (int i = 0; i < countsSize; i++)
-		sum_counts += counts[i][0];
+		sum_counts += counts[i];
 
 	cout << fixed << setprecision(15);
 
-	double p[countsSize][COLS];
-	double omega[countsSize][COLS];
+	double p[countsSize];
+	double omega[countsSize];
 
 	// Initializing omega
 	for (int i = 0; i < countsSize; i++)
-			omega[i][0] = 0;
+			omega[i] = 0;
 
 	for (int i = 0; i < countsSize; i++)
 	{
-		p[i][0] = counts[i][0] / sum_counts;
+		p[i] = counts[i] / sum_counts;
 
 		for (int j = i; j >= 0; j--) // Equivalent to "omega = cumsum(p)" on MATLAB
-			omega[i][0] += p[j][0];
+			omega[i] += p[j];
 	}
 
-	double mu[countsSize][COLS];
+	double mu[countsSize];
 
 	// Initializing mu
 	for (int i = 0; i < countsSize; i++)
-			mu[i][0] = 0;
+			mu[i] = 0;
 
 	for (int i = 0; i < countsSize; i++) //Equivalent to "mu = cumsum(p .* (1:numel(counts))')"
 		for (int j = i; j >= 0; j--)
-			mu[i][0] += p[j][0] * (j+1);
+			mu[i] += p[j] * (j+1);
 
-	double mu_t = mu[countsSize-1][0];
+	double mu_t = mu[countsSize-1];
 
-	double sigma_b_squared[countsSize][COLS];
+	double sigma_b_squared[countsSize];
 	double maxval = 0;
 
 	for (int i = 0; i < countsSize; i++)
 	{
-		sigma_b_squared[i][0] = pow((mu_t * omega[i][0] - mu[i][0]), 2) / (omega[i][0] * (1 - omega[i][0]));
-		if (sigma_b_squared[i][0] > maxval)
-			maxval = sigma_b_squared[i][0];
+		sigma_b_squared[i] = pow((mu_t * omega[i] - mu[i]), 2) / (omega[i] * (1 - omega[i]));
+		if (sigma_b_squared[i] > maxval)
+			maxval = sigma_b_squared[i];
 	}
 
 	double pos = 0;
@@ -119,7 +119,7 @@ double otsu(double counts[][COLS], int countsSize)
 		int num_pos = 0;
 		for (int i = 0; i < countsSize; i++)
 		{
-				if(sigma_b_squared[i][0] == maxval)
+				if(sigma_b_squared[i] == maxval)
 				{
 						pos += i;
 						num_pos++;
@@ -133,20 +133,20 @@ double otsu(double counts[][COLS], int countsSize)
 	return pos;
 }
 
-void otsurec_helper(double T[][COLS], double counts[][COLS], int lowerBin, int upperBin, int tLower, int tUpper)
+void otsurec_helper(double T[], double counts[], int lowerBin, int upperBin, int tLower, int tUpper)
 {
 		if ((tUpper < tLower) || (lowerBin >= upperBin))
 			return;
 		else
 		{
 				int size = ceil(upperBin) - ceil(lowerBin) + 1;
-				double counts_aux[size][1];
+				double counts_aux[size];
 
 				int j = 0;
 				// The "- 1" on limits: Array in C++: 0..255. In MATLAB 1..256
 				for (int i = ceil(lowerBin) - 1; i <= ceil(upperBin); i++)
 				{
-						counts_aux[j][0] = counts[i][0];
+						counts_aux[j] = counts[i];
 						j++;
 				}
 
@@ -159,7 +159,7 @@ void otsurec_helper(double T[][COLS], double counts[][COLS], int lowerBin, int u
 				float aux2 = ceil(aux1);
 				int insertPos = aux2;
 
-				T[insertPos-1][0] = level / NUM_BINS;
+				T[insertPos-1] = level / NUM_BINS;
 				otsurec_helper(T, counts, lowerBin, level, tLower, insertPos - 1);
         otsurec_helper(T, counts, level + 1, upperBin, insertPos + 1, tUpper);
 		}

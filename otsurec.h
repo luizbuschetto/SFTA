@@ -12,6 +12,6 @@ using namespace std;
 using namespace cv;
 
 //void otsurec(Mat I, int ttotal);
-void otsurec(Mat I, int ttotal, double T[][COLS]);
-double otsu(double counts[][COLS], int countsSize);
-void otsurec_helper(double T[][COLS], double counts[][COLS], int lowerBin, int upperBin, int tLower, int tUpper);
+void otsurec(Mat I, int ttotal, double T[]);
+double otsu(double counts[], int countsSize);
+void otsurec_helper(double T[], double counts[], int lowerBin, int upperBin, int tLower, int tUpper);

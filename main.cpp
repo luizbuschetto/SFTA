@@ -10,12 +10,11 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+			double start = getTickCount();
 
-			double start = cv::getTickCount();
-
-			Mat src = imread("test.jpg");
+			Mat src = imread("pisos/bom.jpg");
 			sfta(src, 8);
 
 			cout << endl;
-			cout << "Time: " << ((double)cv::getTickCount() - start) / cv::getTickFrequency() << std::endl;
+			cout << "Time: " << ((double)getTickCount() - start) / getTickFrequency() << endl;
 }
