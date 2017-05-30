@@ -5,8 +5,7 @@
 
 void sfta(Mat I, int nt)
 {
-	double range = 0;
- 	minMaxLoc(I, NULL, &range);
+	double range = 255; // Considering the image type = uint8 -> CV_8UC1
 
 	I.convertTo(I, CV_8UC1);
 	cvtColor(I, I, CV_BGR2GRAY, 1);
