@@ -6,4 +6,4 @@
 using namespace std;
 using namespace cv;
 
-void sfta(Mat I, int nt);
+double* sfta(Mat I, int nt);

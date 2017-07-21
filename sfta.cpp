@@ -3,7 +3,7 @@
 #include "findBorders.h"
 #include "hausDim.h"
 
-void sfta(Mat I, int nt)
+double* sfta(Mat I, int nt)
 {
 	double range = 255; // Considering the image type = uint8 -> CV_8UC1
 
@@ -17,7 +17,7 @@ void sfta(Mat I, int nt)
 	 otsurec(I, nt, T);
 
 	 int dSize = nt * 6;
-	 double D[dSize];
+	 double* D = (double*)malloc(dSize * sizeof(double));
 	 int pos = 0; 				// Begins at 0 because the value range in OpenCV is different of MATLAB
 	 Mat Ib = Mat::zeros(I.rows, I.cols, I.type());
 
@@ -114,6 +114,5 @@ void sfta(Mat I, int nt)
 				pos += 1;
 		}
 
-		for(int i = 0; i < pos; i++)
-				cout << "D[" << i + 1 << "]: " << D[i] << endl;
+		return D;
 }
