@@ -40,8 +40,6 @@ double hausDim(Mat I)
         // minBox = (1: boxSize: (iSize - boxSize) + 1);
         // minBox = insertInArray(minBox, boxSize, iSize, boxesPerDim);
 
-        // Acredito que dê para otimizar
-
         int valueMinBox = 1;
         int valueMaxBox = boxSize;
 
@@ -52,8 +50,6 @@ double hausDim(Mat I)
             valueMinBox += boxSize;
             valueMaxBox += boxSize;
         }
-
-        // ---------------------------------------------------------------------
 
         for (int boxRow = 0; boxRow < boxesPerDim; boxRow++)
         {

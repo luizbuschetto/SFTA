@@ -1,9 +1,5 @@
 #include "otsurec.h"
 
-// References
-// https://stackoverflow.com/questions/15771512/compare-histograms-of-grayscale-images-in-opencv
-// http://www.geeksforgeeks.org/pass-2d-array-parameter-c/
-
 void otsurec(Mat I, int ttotal, double T[])
 {
 	if (!I.empty())

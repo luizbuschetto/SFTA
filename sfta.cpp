@@ -35,7 +35,6 @@ double* sfta(Mat I, int nt)
 				Mat Ib_borders = Mat::zeros(Ib.rows, Ib.cols, Ib.type());
 				Ib_borders = findBorders(Ib);
 
-				// OTIMIZAR URGENTEMENTE ESSA SEÇÃO DE CÓDIGO!!!!!! --------------------
 				double sumVals = 0;
 				int countVals = 0;
 
@@ -51,8 +50,6 @@ double* sfta(Mat I, int nt)
 								  }
 				 		  }
 			  }
-
-				// ---------------------------------------------------------------------
 
 				D[pos] = hausDim(Ib_borders);
 				pos += 1;
@@ -85,7 +82,6 @@ double* sfta(Mat I, int nt)
 				Mat Ib_borders = Mat::zeros(Ib.rows, Ib.cols, Ib.type());
 				Ib_borders = findBorders(Ib_thresh);
 
-				// OTIMIZAR URGENTEMENTE ESSA SEÇÃO DE CÓDIGO!!!!!! --------------------
 				double sumVals = 0;
 				int countVals = 0;
 
@@ -101,8 +97,6 @@ double* sfta(Mat I, int nt)
 								  }
 				 		  }
 			  }
-
-				// ---------------------------------------------------------------------
 
 				D[pos] = hausDim(Ib_borders);
 				pos += 1;

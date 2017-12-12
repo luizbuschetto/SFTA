@@ -12,12 +12,16 @@ int main(int argc, char* argv[])
 {
 			double start = getTickCount();
 
-			Mat src = imread("test.jpg");
+			Mat src = imread(argv[1]);
+
+			int nt = atoi(argv[2]);
 
 			double* D;
-			D = sfta(src, 8);
+			D = sfta(src, nt);
 
-			for(int i = 0; i < 48; i++)
+			int featureQuantity = nt * 6; // nt * 2 Binary Images * 3 Features
+
+			for(int i = 0; i < featureQuantity; i++)
 					cout << "D[" << i + 1 << "]: " << D[i] << endl;
 
 			cout << endl;
